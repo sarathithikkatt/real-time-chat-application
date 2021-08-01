@@ -1,0 +1,127 @@
+<div class="container">
+    <h3 class=" text-center" style="text-align: center; font-size: x-large; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-weight: 1000; color: rgb(83, 83, 212)">WELCOME <b>{{name.name}}</b></h3>
+    <h4> <button type="button" (click)="logout()" class="block" style="float: right;">LOGOUT</button></h4>
+    <div class="messaging">
+        <div class="inbox_msg">
+            <div class="inbox_people">
+                <div class="headind_srch" style="background-color:  #646D6D">
+                    <div class="channel_heading">
+                        <h4 style="color: white;">Friends</h4>
+                    </div>
+                </div>
+                <div class="inbox_chat">
+                    <div class="channels">
+                        <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_ib">
+
+                                    <div class="frnds">
+                                        <input type="text" [(ngModel)]="frnd.name" style="text-align: center;" class="srch2" name="name" placeholder="search user">
+                                        <br>
+                                        <br>
+                                        <button class="sear" (click)="frndata()" type="button">Search</button>
+                                    </div>
+                                    <br>
+                                    <div class="chat">
+                                        <div class="div" (click)="frndata()">{{frnds.name}}</div>
+                                    </div>
+                                    <h2>ALL Users</h2>
+                                    <div class="chat" (click)="frndchat(allfrnd)" *ngFor="let allfrnd of allfrnds">
+                                        <!-- <div class="div" (click)="frndchat(allfrnd)" *ngFor="let allfrnd of allfrnds">{{allfrnd.name}}</div> -->
+                                        <div class="username" style="text-align: center; padding: .8%; font-size: medium; font-family: cursive; font-weight: 600; color: white">{{allfrnd.name}}
+
+                                            <button class="btn btn-primary" *ngIf="!mutearray.includes(allfrnd._id)" style="background-color: cadetblue; height: 33px; width: fit-content;" (click)="mute(allfrnd)">Mute</button>
+                                            <button class="btn btn-primary" *ngIf="mutearray.includes(allfrnd._id)" style="background-color: cadetblue; height: 33px; width: fit-content;" (click)="unmute(allfrnd)">Unmute</button>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="rightsid" *ngIf="!showcontent" style="background-color:  #646D6D">
+                <div class="mainContent">
+                    <h1 style="text-align: center; font-size: x-large; font-family: cursive; font-weight: 1000; color: white">WELCOME to cHatME!</h1>
+
+
+                    <h3 style="text-align: center; padding: 10%; margin-top: 30%; font-size: xx-large; opacity: .2; color: white; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-weight: 700;">
+                        Select users to start chatting
+                    </h3>
+                </div>
+            </div>
+            <!-- right side -->
+            <div class="rightsid" *ngIf="showcontent" style="background-color: #1F2525">
+                <h3 style="text-align: center;  font-size: x-large; font-family: cursive; font-weight: 1000; color: white">{{selectedUser}}</h3>
+                <button type="button" *ngIf="isShow==unblock" (click)='blockuser()' class="block" style="float: right;">Block</button>
+
+                <button type="button" *ngIf="isShow==block " (click)="unblockuser()" class="block2" style="float: left;">Unblock</button>
+
+
+
+
+
+                <div class="chat-body" #scrollMe [scrollTop]="scrollMe.scrollHeight" style="width: 100%; height: 100;">
+
+
+                    <div style="float: right;">
+                        <p *ngFor="let recmsg of recmsgs" class="message-container " #scrollMe [scrollTop]="scrollMe.scrollHeight">
+
+                            {{recmsg.msg}}
+                        </p>
+                    </div>
+
+
+
+                    <div style="float: left; " #scrollMe [scrollTop]="scrollMe.scrollHeight">
+
+
+                        <div *ngFor="let i of msgarraysstore ">
+
+                            <div *ngIf="i.from== tomsg.to" class=" message-container3">{{i.msg}}</div>
+
+                            <!-- <div *ngIf="i.from== tomsg.to;then content else other_content"></div>
+                            <ng-template #content>{{i.msg}}</ng-template>
+                            <ng-template #other_content></ng-template> -->
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+                <div class="chat-footer " style="background-color: #1F2525;">
+
+                    <div class="row ">
+                        <div class="col-md-10 ">
+                            <div class="form-group mb-0 ">
+                                <input class="chatInput" (keydown)="Mgstype($event) " [(ngModel)]="msg " name="msgbox " width="100px " />
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 text-center align-self-center ">
+
+                            <button class="msg_send_btn " [disabled]="isShow!=unblock" type="button" (click)=send()>Send</button>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
